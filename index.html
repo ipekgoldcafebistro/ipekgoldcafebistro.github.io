@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="İpek Gold" />
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <title>İPEK GOLD | Premium QR Menü</title>
+    <meta name="description" content="İpek Gold Cafe & Bistro — Ultra premium sinematik dijital menü deneyimi. Craft Coffee, Signature Desserts & Bistro." />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="İPEK GOLD Cafe & Bistro — Premium Menü" />
+    <meta property="og:description" content="Craft Coffee • Signature Desserts • Bistro Experience" />
+    <meta property="og:type" content="website" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="image" href="/emblem.png" fetchpriority="high" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700;800&display=swap" />
+    </noscript>
+
+    <style>
+      /* Keep the shell warm even if external font loading is slow. */
+      html, body { background: #FDFBF7; overflow: hidden; }
+      #root:empty {
+        min-height: 100dvh;
+        background:
+          radial-gradient(circle at 50% 22%, rgba(197,160,89,0.14), transparent 34%),
+          linear-gradient(135deg, #ffffff 0%, #FDFBF7 48%, #f0ede6 100%);
+      }
+      /* iOS notch safe area */
+      body { padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

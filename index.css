@@ -1,0 +1,389 @@
+@import "tailwindcss";
+
+@theme {
+  --font-inter: 'Inter', sans-serif;
+  --font-playfair: 'Playfair Display', serif;
+  --color-espresso: #1a0a00;
+  --color-charcoal: #2A2421;
+  --color-gold: #C5A059;
+  --color-gold-light: #d4b572;
+  --color-amber: #ff9f1c;
+  --color-neon-orange: #ff6b35;
+  --color-glass: rgba(255,255,255,0.06);
+  --color-glass-border: rgba(255,255,255,0.12);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #FDFBF7;
+  color: #2A2421;
+  font-family: 'Inter', sans-serif;
+  /* Smooth transitions for navigation */
+  scroll-behavior: smooth;
+}
+
+/* --- Hardware Acceleration (GPU) --- */
+.gpu-layer {
+  transform: translate3d(0,0,0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform, opacity;
+}
+
+/* Grain texture overlay - Optimized */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(42,36,33,0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42,36,33,0.014) 1px, transparent 1px);
+  background-size: 3px 3px;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.45;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.2); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(212,175,55,0.4); }
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(212,175,55,0.2) transparent;
+  overscroll-behavior: contain;
+}
+
+.no-scrollbar,
+.glass-nav {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar,
+.glass-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.safe-bottom {
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 1rem);
+}
+
+.light-leak {
+  position: absolute;
+  width: 42vw;
+  height: 140vh;
+  left: -18vw;
+  top: -20vh;
+  background: linear-gradient(100deg, transparent 0%, rgba(212, 175, 55, 0.18) 48%, transparent 100%);
+  filter: blur(24px);
+  transform: rotate(18deg);
+  animation: light-leak-sweep 3.4s ease-in-out forwards;
+  pointer-events: none;
+}
+
+@keyframes light-leak-sweep {
+  0% { opacity: 0; transform: translateX(-20vw) rotate(18deg); }
+  35% { opacity: 0.9; }
+  100% { opacity: 0; transform: translateX(130vw) rotate(18deg); }
+}
+
+/* Glass / Editorial UI Elements */
+.glass-card, .editorial-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(197, 160, 89, 0.15);
+  border-radius: 28px;
+  box-shadow: 0 15px 40px -10px rgba(197, 160, 89, 0.08), 0 5px 15px -5px rgba(0,0,0,0.03);
+  contain: layout paint;
+}
+
+.glass-nav {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+/* Gold Text Effects */
+.gold-glow {
+  text-shadow: 0 0 30px rgba(197, 160, 89, 0.4), 0 0 60px rgba(197, 160, 89, 0.1);
+}
+
+.text-gold { color: #D4AF37; }
+
+/* Sections */
+.snap-section {
+  height: 100dvh;
+  width: 100%;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Overlay for cinematic feel */
+.cinematic-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(253,251,247,0.9) 0%,
+    rgba(253,251,247,0) 25%,
+    rgba(253,251,247,0) 75%,
+    rgba(253,251,247,1) 100%
+  );
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Form Inputs - Admin Only */
+input[type="text"], input[type="number"], select, textarea {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+input:focus, select:focus, textarea:focus {
+  box-shadow: 0 0 0 4px rgba(212,175,55,0.1);
+}
+
+/* Studio Admin Styles */
+.studio-input {
+  width: 100%;
+  background: #FDFBF7;
+  border: 1px solid rgba(0,0,0,0.05);
+  border-radius: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  outline: none;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #2A2421;
+  font-weight: 500;
+}
+
+.studio-input:focus {
+  border-color: rgba(197, 160, 89, 0.5);
+  background: white;
+  box-shadow: 0 10px 30px rgba(197, 160, 89, 0.08);
+}
+
+.studio-submit-btn {
+  width: 100%;
+  padding: 1.5rem;
+  background: #2A2421;
+  color: white;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  border-radius: 100px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.studio-submit-btn:hover {
+  background: #C5A059;
+  transform: translateY(-4px);
+  box-shadow: 0 20px 50px rgba(197, 160, 89, 0.3);
+}
+
+.studio-submit-btn:active {
+  transform: translateY(0);
+}
+
+/* Pulse animation */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); box-shadow: 0 0 40px rgba(212,175,55,0.3); }
+}
+.pulse-gold { animation: pulse-glow 4s ease-in-out infinite; }
+
+@keyframes ipek-soft-enter {
+  from { opacity: 0; transform: translate3d(0, 14px, 0); filter: blur(8px); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); filter: blur(0); }
+}
+
+@keyframes ipek-page-enter {
+  from { opacity: 0; transform: translate3d(0, 12px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes ipek-nav-enter {
+  from { opacity: 0; transform: translate3d(0, 76px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes ipek-logo-enter {
+  from { opacity: 0; transform: scale(0.72) rotate(-8deg); }
+  to { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+@keyframes ipek-logo-float {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(-2deg) scale(1);
+  }
+  25% {
+    transform: translate3d(4px, -5px, 0) rotate(3deg) scale(1.035);
+  }
+  50% {
+    transform: translate3d(0, -8px, 0) rotate(-1deg) scale(1.055);
+  }
+  75% {
+    transform: translate3d(-4px, -4px, 0) rotate(2deg) scale(1.025);
+  }
+}
+
+@keyframes ipek-search-enter {
+  from { opacity: 0; transform: translate3d(0, 18px, 0) scale(0.98); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes ipek-modal-backdrop {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes ipek-modal-sheet {
+  from { transform: translate3d(0, 105%, 0) scale(0.98); }
+  to { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes ipek-pop-enter {
+  from { opacity: 0; transform: translate3d(0, 24px, 0) scale(0.94); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes ipek-particle-rise {
+  0% { opacity: 0; transform: translate3d(0, 0, 0) scale(1); }
+  42% { opacity: 0.85; transform: translate3d(0, -90px, 0) scale(1.2); }
+  100% { opacity: 0; transform: translate3d(0, -160px, 0) scale(0.4); }
+}
+
+@keyframes ipek-scroll-cue {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, 5px, 0); }
+}
+
+@keyframes ipek-intro-dot {
+  0%, 100% { opacity: 0.3; transform: translate3d(0, 0, 0); }
+  50% { opacity: 1; transform: translate3d(0, -3px, 0); }
+}
+
+.ipek-soft-enter { animation: ipek-soft-enter 0.72s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.ipek-page-enter { animation: ipek-page-enter 0.24s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.ipek-nav-enter { animation: ipek-nav-enter 0.42s cubic-bezier(0.22, 1, 0.36, 1) 0.06s both; }
+.ipek-logo-enter {
+  animation:
+    ipek-logo-enter 0.78s cubic-bezier(0.22, 1, 0.36, 1) 0.16s both,
+    ipek-logo-float 4.8s ease-in-out 0.95s infinite;
+}
+.ipek-search-enter { animation: ipek-search-enter 0.24s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.ipek-modal-backdrop-enter { animation: ipek-modal-backdrop 0.22s ease-out both; }
+.ipek-modal-sheet-enter { animation: ipek-modal-sheet 0.38s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.ipek-pop-enter { animation: ipek-pop-enter 0.3s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.ipek-scroll-cue { animation: ipek-scroll-cue 1.6s ease-in-out infinite; }
+
+.ipek-intro-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #D4AF37;
+  animation: ipek-intro-dot 0.72s ease-in-out infinite;
+}
+
+.ipek-copyright-credit {
+  position: fixed;
+  left: 50%;
+  z-index: 58;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: max-content;
+  max-width: calc(100vw - 32px);
+  transform: translateX(-50%);
+  color: rgba(42, 36, 33, 0.34);
+  font-size: 0.48rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 1px 4px rgba(255,255,255,0.72));
+}
+
+.ipek-particle {
+  animation-name: ipek-particle-rise;
+  animation-timing-function: ease-out;
+  animation-iteration-count: infinite;
+}
+
+.ipek-pressable {
+  transition: transform 0.16s ease, background 0.25s ease, color 0.25s ease;
+}
+
+.ipek-pressable:active {
+  transform: scale(0.965);
+}
+
+.ipek-social-pill {
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.ipek-social-pill:active {
+  transform: scale(0.97);
+}
+
+@media (max-height: 760px) {
+  .ipek-logo-enter {
+    max-width: 82px;
+  }
+}
+
+.ipek-card-image {
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.group:hover .ipek-card-image {
+  transform: scale(1.06);
+}
+
+.ipek-stagger > * {
+  opacity: 0;
+  transform: translate3d(0, 12px, 0);
+  animation: ipek-page-enter 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ipek-stagger > *:nth-child(1) { animation-delay: 0.04s; }
+.ipek-stagger > *:nth-child(2) { animation-delay: 0.08s; }
+.ipek-stagger > *:nth-child(3) { animation-delay: 0.12s; }
+.ipek-stagger > *:nth-child(4) { animation-delay: 0.16s; }
+.ipek-stagger > *:nth-child(5) { animation-delay: 0.2s; }
+
+/* Modal specific */
+.modal-backdrop {
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .gpu-layer {
+    will-change: auto;
+  }
+}
