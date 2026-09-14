@@ -1,0 +1,1 @@
+export const COPYRIGHT_LABEL = '© MEHMET ALİ ERDOĞAN';
